@@ -11,13 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:ital,wght@0,100;0,500;0,700;1,100&display=swap" rel="stylesheet">
 
   <style>
-    input:invalid {
+  input:invalid {
   border-color: red;
-}
+  background-color: rgb(213, 143, 143);
+  }
 
-input:valid {
+  input:valid {
   border-color: green;
-}
+  background-color: rgb(137, 184, 68);
+  }
     a:link{
       color: white;
     }
@@ -124,6 +126,7 @@ input:valid {
     }
     .first-name{
       margin-left: 95px;
+      
     }
     .last-name{
       margin-right: 522px;
@@ -144,9 +147,13 @@ input:valid {
       margin-bottom: 20px;
       
     }
+    /* .input-box{
+      transition: all 0.5s ;
+    } */
     .input-box:focus{
       box-shadow: 0px 2px 1px black;
-      border: none;
+      border: solid;
+      border-width: 0.6px;
     }
     .right-bottom-div{
       margin-left: 95px;
@@ -171,6 +178,12 @@ input:valid {
     .create-button:active{
       opacity: 0.6;
     }
+    .clicked {
+      transition: transform 0.5s ease-out;
+      transform: scale(1.2);
+      
+    }
+    
     
     
     
@@ -199,6 +212,7 @@ input:valid {
         to get started.</br></br> You know you want to.
       </p>
     </div>
+    <form  >
     <div class="mid-right-container">
       <p class="mid-title">Let's get started ! </p>
       <div class="Name">
@@ -206,8 +220,8 @@ input:valid {
       <label for="last-name" class="last-name"> LAST NAME</br></label>
     </div>
     <div class="name-input">
-      <input class="input-box" type="text" id="first_name">
-      <input class="input-box" type="text" id="last_name">
+      <input class="input-box" type="text" name="first-name" id="first_name" placeholder="Johnny">
+      <input class="input-box" type="text" name="last-name" id="last_name" placeholder="Boy">
     </div>
 
     <div class="Name">
@@ -215,29 +229,67 @@ input:valid {
       <label for="phnumber" class="last-name"> PHONE NUMBER</br></label>
     </div>
     <div class="name-input">
-      <input class="input-box" type="email" id="email">
-      <input class="input-box" type="number" id="phnumber" min="1" >
+      <input class="input-box" type="email" name="email" id="email" placeholder="you@example.com" required>
+      <input class="input-box" type="number" name="phnumber" id="phnumber"  pattern="(\d{5}([\-]\d{4})?)" title="Please submit a valid number" required>
     </div>
 
     <div class="Name">
-      <label for="email" class="first-name"> PASSWORD </label>
-      <label for="phnumber" class="last-name">CONFIRM PASSWORD</br></label>
+      <label for="password" class="first-name"> PASSWORD </label>
+      <label for="cpassword" class="last-name">CONFIRM PASSWORD</br></label>
     </div>
     <div class="name-input">
-      <input class="input-box" type="email" id="email">
-      <input class="input-box" type="number" id="phnumber">
+      <input class="input-box" type='password' name="password" id="password" required>
+      <input class="input-box" type='password' name="cpassword" id="cpassword">
     </div>
       
     </div>
+  
   <div class="right-bottom-div">
-    <button class="create-button">
+    <button  class="create-button">
       Create Account
     </button>
-
+  </form>
   </div>
     
 
   </div>
 </div>
+<script>
+  let midTitle= document.querySelectorAll('.mid-title');
+  const createAccBtn= document.querySelectorAll(".create-button");
+
+  createAccBtn[0].addEventListener('click',(e)=> {
+    const firstName= document.querySelectorAll('#first_name');
+    newName= firstName[0].value;
+    midTitle[0].innerText=` Account created for ${newName} !`;
+  });
+
+  
+  const inputs= document.querySelectorAll('.input-box');
+  inputs.forEach(input => {input.addEventListener('transitionend',(e)=>{
+    if (e.propertyName!=='transform' ) {return} ;
+    const secondInputBox= document.querySelectorAll('.input-box');
+    secondInputBox.forEach(sinput=>sinput.addEventListener('click',(e)=>{
+      if (e.target.id!=input.id){
+        input.classList.remove('clicked');
+      }
+    }))
+    
+  })
+    
+  });
+  
+
+  document.addEventListener('click',(e)=>{
+    
+    const inputBox= document.querySelectorAll(`input[id="${e.srcElement.id}"]`)[0];
+    inputBox.classList.toggle('clicked');
+    
+  })
+
+  
+  
+</script>
+
 </body>
 </html>
